@@ -21,7 +21,7 @@ Modify `/etc/hosts` files on each node and your local machine, add configuration
 192.168.64.7 hworker2
 ```
 > - Change ip adresses with your own.
-> - You can skip node's own record, or change it to `127.0.0.1`
+> - Note that sometimes ip addresses like `127.0.1.1` could cause problem.
 
 **Step 2:** Create non-root user with sudo privileges. In this walkthrough, default non-root user `ubuntu` will be used.
 
