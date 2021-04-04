@@ -1,5 +1,6 @@
 This installation tested with Ubuntu 20.04 in:
 * [Multipass](https://multipass.run/) on macOS.
+* [Hetzner](https://www.hetzner.com/) CX21 Servers.
 
 # Setup
 
