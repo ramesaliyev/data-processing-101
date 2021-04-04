@@ -23,6 +23,7 @@ Modify `/etc/hosts` files on each node and your local machine, add configuration
 ```
 > - Change ip adresses with your own.
 > - Note that sometimes ip addresses like `127.0.1.1` could cause problem.
+> - Use Private Network IP addresses here if possible.
 
 **Step 2:** Create non-root user with sudo privileges. In this walkthrough, default non-root user `ubuntu` will be used.
 
@@ -290,7 +291,7 @@ All these configurations will be done on `{master node}`, then when we done, we 
 </configuration>
 ```
 
-> In the value field for the yarn.resourcemanager.hostname, replace `192.168.64.5` with the public IP address of master node.
+> In the value field for the yarn.resourcemanager.hostname, replace `192.168.64.5` with the **public IP** address of master node.
 
 **Step 5:** Configure workers, edit `$HADOOP_HOME/etc/hadoop/workers` 
 
