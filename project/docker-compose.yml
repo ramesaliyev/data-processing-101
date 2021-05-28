@@ -18,7 +18,7 @@ services:
     container_name: hadoop_resourcemanager
     volumes:
       - ./volumes/data:/hadoop/host_shared/data
-      - ./volumes/mapreduce:/hadoop/host_shared/mapreduce
+      - ./volumes/code:/hadoop/host_shared/code
     depends_on:
       - namenode
       - datanode1
@@ -45,6 +45,8 @@ services:
   nodemanager1:
     image: bde2020/hadoop-nodemanager:1.1.0-hadoop2.7.1-java8
     container_name: hadoop_nodemanager1
+    volumes:
+      - ./volumes/data:/hadoop/host_shared/data
     depends_on:
       - namenode
       - datanode1
@@ -58,6 +60,8 @@ services:
   nodemanager2:
     image: bde2020/hadoop-nodemanager:1.1.0-hadoop2.7.1-java8
     container_name: hadoop_nodemanager2
+    volumes:
+      - ./volumes/data:/hadoop/host_shared/data
     depends_on:
       - namenode
       - datanode1
@@ -71,6 +75,8 @@ services:
   nodemanager3:
     image: bde2020/hadoop-nodemanager:1.1.0-hadoop2.7.1-java8
     container_name: hadoop_nodemanager3
+    volumes:
+      - ./volumes/data:/hadoop/host_shared/data
     depends_on:
       - namenode
       - datanode1
