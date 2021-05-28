@@ -35,8 +35,10 @@ Edit `hadoop-env.sh`, replace following configs;
 
 ```
 export HADOOP_OPTS="$HADOOP_OPTS -Djava.net.preferIPv4Stack=true -Djava.security.krb5.realm= -Djava.security.krb5.kdc="
-export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
 ```
+
+> You need Java 1.8
 
 Edit `core-site.xml`
 
