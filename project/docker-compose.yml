@@ -26,6 +26,7 @@ services:
       - datanode3
     ports:
       - 8082:8088
+      - 4567:4567
     env_file:
       - ./hadoop.env
   
@@ -54,36 +55,6 @@ services:
       - datanode3
     ports:
         - 8083:8042
-    env_file:
-      - ./hadoop.env
-    
-  nodemanager2:
-    image: bde2020/hadoop-nodemanager:1.1.0-hadoop2.7.1-java8
-    container_name: hadoop_nodemanager2
-    volumes:
-      - ./volumes/data:/hadoop/host_shared/data
-    depends_on:
-      - namenode
-      - datanode1
-      - datanode2
-      - datanode3
-    ports:
-        - 8084:8042
-    env_file:
-      - ./hadoop.env
-
-  nodemanager3:
-    image: bde2020/hadoop-nodemanager:1.1.0-hadoop2.7.1-java8
-    container_name: hadoop_nodemanager3
-    volumes:
-      - ./volumes/data:/hadoop/host_shared/data
-    depends_on:
-      - namenode
-      - datanode1
-      - datanode2
-      - datanode3
-    ports:
-        - 8085:8042
     env_file:
       - ./hadoop.env
   
