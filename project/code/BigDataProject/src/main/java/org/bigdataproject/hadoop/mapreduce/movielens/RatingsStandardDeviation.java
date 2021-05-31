@@ -1,4 +1,4 @@
 package org.bigdataproject.hadoop.mapreduce.movielens;
 
-public class Median {
+public class RatingsStandardDeviation {
 }

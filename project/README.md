@@ -1,7 +1,7 @@
 # About
 
 ## Dataset
-MovieLens (9/2018) full dataset used https://grouplens.org/datasets/movielens/latest/. To run project you need to place `links.csv`, `movies.csv`, `tags.csv`, and `ratings.csv` under `volumes/data` folder.
+MovieLens (9/2018) full dataset used https://grouplens.org/datasets/movielens/latest/. To run project you need to place `links.csv`, `movies.csv`, `tags.csv`, and `ratings.csv` directly under `volumes/data` folder. Then you can load them into HDFS from WebUI.
 
 ## Initialization
 

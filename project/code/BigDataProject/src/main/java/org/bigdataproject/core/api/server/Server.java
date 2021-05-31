@@ -1,4 +1,4 @@
-package org.bigdataproject.api;
+package org.bigdataproject.core.api.server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -6,9 +6,6 @@ import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.function.BiConsumer;
-
-interface RouteHandlerFn extends BiConsumer<Request, Response> {}
 
 class RouteHandler implements HttpHandler {
     private final String path;

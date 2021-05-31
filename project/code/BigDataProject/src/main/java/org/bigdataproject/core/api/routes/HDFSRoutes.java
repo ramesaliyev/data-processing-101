@@ -1,41 +1,33 @@
-package org.bigdataproject.api;
+package org.bigdataproject.core.api.routes;
 
+import org.apache.hadoop.fs.LocatedFileStatus;
+import org.apache.hadoop.fs.RemoteIterator;
+import org.bigdataproject.core.api.server.Request;
+import org.bigdataproject.core.api.server.Response;
+import org.bigdataproject.core.api.server.Server;
 import org.bigdataproject.hadoop.HDFS;
 
 import java.io.IOException;
 
-public class API {
-    private final Server server;
-
-    public API(int port) throws IOException {
-        this.server = new Server(port);
-
-        // Common Routes
-        this.server.get("/health", this::routeHealthCheck);
-
-        // HDFS Routes
-        this.server.get("/hdfs/mkdir", this::routeHDFSCreateDirectory);
-        this.server.get("/hdfs/remove", this::routeHDFSRemovePath);
-        this.server.get("/hdfs/write", this::routeHDFSWriteFile);
-        this.server.get("/hdfs/read", this::routeHDFSReadFile);
-        this.server.get("/hdfs/append", this::routeHDFSAppendFile);
-
-        // Start server.
-        this.server.start();
-    }
-
-    public void routeHealthCheck(Request req, Response res) {
-        res.send("ok");
+public class HDFSRoutes {
+    public HDFSRoutes(Server server) {
+        server.get("/hdfs/mkdir", this::routeHDFSCreateDirectory);
+        server.get("/hdfs/remove", this::routeHDFSRemovePath);
+        server.get("/hdfs/write", this::routeHDFSWriteFile);
+        server.get("/hdfs/read", this::routeHDFSReadFile);
+        server.get("/hdfs/list", this::routeHDFSListFiles);
+        server.get("/hdfs/append", this::routeHDFSAppendFile);
     }
 
     public void routeHDFSCreateDirectory(Request req, Response res) {
         String path = req.params.get("path");
+
         if (path != null) {
             try {
                 HDFS.createDirectory(path);
                 res.send("ok");
             } catch (IOException e) {
-                res.send("error");
+                res.sendError(e);
                 e.printStackTrace();
             }
         }
@@ -43,12 +35,13 @@ public class API {
 
     public void routeHDFSRemovePath(Request req, Response res) {
         String path = req.params.get("path");
+
         if (path != null) {
             try {
                 HDFS.removePath(path);
                 res.send("ok");
             } catch (IOException e) {
-                res.send("error");
+                res.sendError(e);
                 e.printStackTrace();
             }
         }
@@ -63,7 +56,7 @@ public class API {
                 HDFS.writeFile(from, to);
                 res.send("ok");
             } catch (IOException e) {
-                res.send("error");
+                res.sendError(e);
                 e.printStackTrace();
             }
         }
@@ -76,7 +69,28 @@ public class API {
             try {
                 res.send(HDFS.readFileAsString(path));
             } catch (IOException e) {
-                res.send("error");
+                res.sendError(e);
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void routeHDFSListFiles(Request req, Response res) {
+        String path = req.params.get("path");
+
+        if (path != null) {
+            try {
+                StringBuilder responseText = new StringBuilder();
+
+                RemoteIterator<LocatedFileStatus> fileStatusListIterator = HDFS.listFiles(path);
+                while(fileStatusListIterator.hasNext()){
+                    LocatedFileStatus fileStatus = fileStatusListIterator.next();
+                    responseText.append(fileStatus.getPath()).append("\n");
+                }
+
+                res.send(responseText.toString());
+            } catch (IOException e) {
+                res.sendError(e);
                 e.printStackTrace();
             }
         }
@@ -91,7 +105,7 @@ public class API {
                 HDFS.appendFile(from, to);
                 res.send("ok");
             } catch (IOException e) {
-                res.send("error");
+                res.sendError(e);
                 e.printStackTrace();
             }
         }

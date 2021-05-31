@@ -1,4 +1,4 @@
-package org.bigdataproject.api;
+package org.bigdataproject.core.api.server;
 
 import com.sun.net.httpserver.HttpExchange;
 

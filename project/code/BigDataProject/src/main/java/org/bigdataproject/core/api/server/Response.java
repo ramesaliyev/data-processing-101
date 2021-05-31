@@ -1,4 +1,4 @@
-package org.bigdataproject.api;
+package org.bigdataproject.core.api.server;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -25,7 +25,11 @@ public class Response {
     }
 
     public void sendError(Exception exception) {
-
+        try {
+            this.end("error: " + exception.getClass().getSimpleName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void send(String responseText) {

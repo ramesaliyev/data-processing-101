@@ -2,10 +2,7 @@ package org.bigdataproject.hadoop;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FSDataOutputStream;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -38,6 +35,10 @@ public class HDFS {
 
     public static boolean isExists(String path) throws IOException {
         return HDFS.fileSystem.exists(new Path(path));
+    }
+
+    public static RemoteIterator<LocatedFileStatus> listFiles(String path) throws IOException {
+        return HDFS.fileSystem.listFiles(new Path(path), true);
     }
 
     public static FSDataInputStream readFile(String path) throws IOException {
