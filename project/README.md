@@ -14,14 +14,14 @@ hdfs namenode -format
 - Namenode: http://localhost:8081
 - Resource Manager: http://localhost:8082
 - Node Manager 1: http://localhost:8083
-- Node Manager 2: http://localhost:8084
-- Node Manager 3: http://localhost:8085
 
 ## Useful
-File sharing with containers:
+File sharing in containers:
 ```
 /hadoop/host_shared
 ```
+
+To see API calls examine webui.
 
 ## Run
 
@@ -47,10 +47,10 @@ docker exec -ti hadoop_resourcemanager /bin/bash
 
 Run jar with Hadoop:
 ```
-hadoop jar /hadoop/host_shared/code/bigdataproject.jar org.bigdataproject.WordCountAPI /WordCountTutorial/Input /WordCountTutorial/Output1
+hadoop jar /hadoop/host_shared/code/bigdataproject.jar org.bigdataproject.App
 ```
 
-See outputs:
+See outputs from hdfs:
 ```
 hdfs dfs -cat /WordCountTutorial/Output1/*
 ```
