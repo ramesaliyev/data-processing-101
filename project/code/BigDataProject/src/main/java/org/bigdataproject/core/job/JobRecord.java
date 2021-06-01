@@ -14,8 +14,11 @@ public class JobRecord {
     String output;
     Job job;
 
-    public JobRecord(String key, String name, String input, String output, Job job) {
+    public JobRecord() {
         this.uuid = UUID.randomUUID().toString();
+    }
+
+    public void setDetails(String key, String name, String input, String output, Job job) {
         this.key = key;
         this.name = name;
         this.input = input;

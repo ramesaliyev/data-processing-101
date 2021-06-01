@@ -34,7 +34,10 @@ public class JobRoutes {
 
         try {
             Configuration conf = new Configuration();
-            Job job = Job.getInstance(conf, "word count");
+            Job job = Job.getInstance(conf, name);
+            JobRecord jobRecord = new JobRecord();
+
+            output += "/" + jobRecord.getUUID();
 
             JobCatalog.configJobOfKey(key, job);
 
@@ -43,7 +46,7 @@ public class JobRoutes {
 
             job.submit();
 
-            JobRecord jobRecord = new JobRecord(key, name, input, output, job);
+            jobRecord.setDetails(key, name, input, output, job);
             this.jobRecords.put(jobRecord.getUUID(), jobRecord);
 
             res.send(jobRecord.getUUID());
