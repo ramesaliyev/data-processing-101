@@ -3,54 +3,73 @@
 ## Dataset
 MovieLens (9/2018) full dataset used https://grouplens.org/datasets/movielens/latest/. To run project you need to place `links.csv`, `movies.csv`, `tags.csv`, and `ratings.csv` directly under `volumes/data` folder. Then you can load them into HDFS from WebUI.
 
-## Initialization
+## First Hadoop Initialization
 
-In resourcemanager;
+Start docker-compose;
 ```
-hdfs namenode -format
-```
-
-## Web UI Ports
-- Namenode: http://localhost:8081
-- Resource Manager: http://localhost:8082
-- Node Manager 1: http://localhost:8083
-
-## Useful
-File sharing in containers:
-```
-/hadoop/host_shared
+docker-compose up
 ```
 
-To see API calls examine webui.
-
-## Run
-
-Compile jar with all dependencies:
-```
-mvn clean compile assembly:single 
-```
-
-Just compile jar:
-```
-mvn clean package 
-```
-
-Copy `bigdataproject.jar` into `resourcemanager`:
-```
-cp project/code/BigDataProject/target/bigdataproject.jar project/volumes/code
-```
-
-Exec into container:
+Bash into resourcemanager:
 ```
 docker exec -ti hadoop_resourcemanager /bin/bash
 ```
 
-Run jar with Hadoop:
+Format HDFS:
+```
+hdfs namenode -format
+```
+
+Following Hadoop screens will be available; 
+- Namenode: http://localhost:8081
+- Resource Manager: http://localhost:8082
+- Node Manager 1: http://localhost:8083
+
+> For regular initializations just run `docker-compose up`.
+
+Files placed under `volumes/` will be available in `/hadoop/host_shared` within containers.
+
+## Run Project
+
+> Open project with IntelliJIDEA or something.
+
+Compile jar:
+```
+mvn clean package 
+```
+
+When compilation done, make `bigdataproject.jar` available in containers:
+```
+cp project/code/BigDataProject/target/bigdataproject.jar project/volumes/code
+```
+
+Bash into `resourcemanager`:
+```
+docker exec -ti hadoop_resourcemanager /bin/bash
+```
+
+In `resourcemanager` run jar with Hadoop:
 ```
 hadoop jar /hadoop/host_shared/code/bigdataproject.jar org.bigdataproject.App
 ```
 
-See outputs from hdfs:
+Navigate into `webui` folder and Start WebUI:
 ```
-hdfs dfs -cat /WordCountTutorial/Output1/*
+npm start
+```
+
+See WebUI at http://localhost:3000
+
+> To understand how whole application operates you can examine API calls or read code.
+
+# Help
+
+See outputs from HDFS:
+```
+hdfs dfs -cat /path/*
+```
+
+Compile jar with all dependencies:
+```
+mvn clean compile assembly:single 
 ```
