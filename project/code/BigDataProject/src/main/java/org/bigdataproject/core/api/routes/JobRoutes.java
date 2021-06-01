@@ -34,6 +34,8 @@ public class JobRoutes {
 
         try {
             Configuration conf = new Configuration();
+            conf.set("mapred.textoutputformat.separator", ",");
+
             Job job = Job.getInstance(conf, name);
             JobRecord jobRecord = new JobRecord();
 
