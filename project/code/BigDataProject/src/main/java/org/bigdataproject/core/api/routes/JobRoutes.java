@@ -41,7 +41,7 @@ public class JobRoutes {
         try {
             Job job = Job.getInstance(conf, name);
 
-            JobCatalog.configJobOfKey(key, job);
+            JobCatalog.applyJobConfiguration(key, job);
 
             FileInputFormat.addInputPath(job, new Path(input));
             FileOutputFormat.setOutputPath(job, new Path(output));

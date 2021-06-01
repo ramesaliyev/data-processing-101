@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class JobCatalog {
-    public static void configJobOfKey(String key, Job job) {
+    public static void applyJobConfiguration(String key, Job job) {
         try {
             Method method = JobCatalog.class.getMethod("config" + key, Job.class);
             method.invoke(null, job);
