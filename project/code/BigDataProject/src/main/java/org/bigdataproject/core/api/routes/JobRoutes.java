@@ -32,14 +32,14 @@ public class JobRoutes {
         String input = req.params.get("input");
         String output = req.params.get("output");
 
+        JobRecord jobRecord = new JobRecord();
+        output += "/" + jobRecord.getUUID();
+
+        Configuration conf = new Configuration();
+        conf.set("mapred.textoutputformat.separator", ",");
+
         try {
-            Configuration conf = new Configuration();
-            conf.set("mapred.textoutputformat.separator", ",");
-
             Job job = Job.getInstance(conf, name);
-            JobRecord jobRecord = new JobRecord();
-
-            output += "/" + jobRecord.getUUID();
 
             JobCatalog.configJobOfKey(key, job);
 
