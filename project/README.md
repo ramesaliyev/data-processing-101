@@ -53,9 +53,13 @@ In `resourcemanager` run jar with Hadoop:
 hadoop jar /hadoop/host_shared/code/bigdataproject.jar org.bigdataproject.App
 ```
 
-Navigate into `webui` folder and Start WebUI:
+Navigate into `webui` folder and first Build then start WebUI:
 ```
-npm start
+npm install
+npm run build
+
+npm install -g serve
+serve -s build
 ```
 
 See WebUI at http://localhost:3000
