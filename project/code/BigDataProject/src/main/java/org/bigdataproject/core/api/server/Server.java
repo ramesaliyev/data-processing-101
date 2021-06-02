@@ -17,6 +17,15 @@ class RouteHandler implements HttpHandler {
     }
 
     public void handle(HttpExchange httpExchange) throws IOException {
+        httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+
+        if (httpExchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
+            httpExchange.sendResponseHeaders(204, -1);
+            return;
+        }
+
         this.handlerFn.accept(new Request(httpExchange), new Response(httpExchange));
     }
 }

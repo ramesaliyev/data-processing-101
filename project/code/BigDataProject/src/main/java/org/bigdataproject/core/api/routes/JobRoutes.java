@@ -84,7 +84,6 @@ public class JobRoutes {
 
         for (JobRecord jobRecord : jobRecords) {
             responseText.append(jobRecord.getUUID()).append("\n");
-
         }
 
         res.send(responseText.toString());
