@@ -68,6 +68,7 @@ public class JobRoutes {
 
         String responseText =
             "uuid:" + jobRecord.getUUID() + "\n" +
+            "createdAt:" + jobRecord.getCreatedAt() + "\n" +
             "key:" + jobRecord.getKey() + "\n" +
             "name:" + jobRecord.getName() + "\n" +
             "input:" + jobRecord.getInput() + "\n" +

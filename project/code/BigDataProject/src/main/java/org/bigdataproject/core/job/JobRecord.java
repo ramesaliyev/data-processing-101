@@ -4,6 +4,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.JobStatus;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.UUID;
 
 public class JobRecord {
@@ -12,10 +13,12 @@ public class JobRecord {
     String name;
     String input;
     String output;
+    long createdAt;
     Job job;
 
     public JobRecord() {
         this.uuid = UUID.randomUUID().toString();
+        this.createdAt = System.currentTimeMillis();
     }
 
     public void setDetails(String key, String name, String input, String output, Job job) {
@@ -28,6 +31,10 @@ public class JobRecord {
 
     public String getUUID() {
         return uuid;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
     }
 
     public String getKey() {
