@@ -8,6 +8,7 @@ import org.bigdataproject.core.api.server.Server;
 import org.bigdataproject.hadoop.HDFS;
 
 import java.io.IOException;
+import java.util.List;
 
 public class HDFSRoutes {
     public HDFSRoutes(Server server) {
@@ -82,10 +83,9 @@ public class HDFSRoutes {
             try {
                 StringBuilder responseText = new StringBuilder();
 
-                RemoteIterator<LocatedFileStatus> fileStatusListIterator = HDFS.listFiles(path);
-                while(fileStatusListIterator.hasNext()){
-                    LocatedFileStatus fileStatus = fileStatusListIterator.next();
-                    responseText.append(fileStatus.getPath()).append("\n");
+                List<String> fileList = HDFS.listFiles(path);
+                for(String file : fileList){
+                    responseText.append(file).append("\n");
                 }
 
                 res.send(responseText.toString());

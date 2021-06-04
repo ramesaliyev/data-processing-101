@@ -6,6 +6,10 @@ import org.apache.hadoop.fs.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class HDFS {
     public static FileSystem fileSystem;
@@ -37,8 +41,31 @@ public class HDFS {
         return HDFS.fileSystem.exists(new Path(path));
     }
 
-    public static RemoteIterator<LocatedFileStatus> listFiles(String path) throws IOException {
-        return HDFS.fileSystem.listFiles(new Path(path), true);
+    public static List<String> listFiles(String path) throws IOException {
+        FileSystem fs = HDFS.fileSystem;
+        List<String> filePaths = new ArrayList<>();
+        Queue<Path> fileQueue = new LinkedList<>();
+        fileQueue.add(new Path(path));
+
+        while (!fileQueue.isEmpty()) {
+            Path filePath = fileQueue.remove();
+
+            if (fs.isFile(filePath)) {
+                filePaths.add("file:" + filePath.toString());
+            } else {
+                FileStatus[] fileStatuses = fs.listStatus(filePath);
+
+                if (fileStatuses.length == 0) {
+                    filePaths.add("dir:" + filePath.toString());
+                } else {
+                    for (FileStatus fileStatus : fileStatuses) {
+                        fileQueue.add(fileStatus.getPath());
+                    }
+                }
+            }
+        }
+
+        return filePaths;
     }
 
     public static FSDataInputStream readFile(String path) throws IOException {
