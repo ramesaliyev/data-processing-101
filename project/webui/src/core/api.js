@@ -2,6 +2,11 @@ import orderBy from 'lodash/orderBy';
 import {fetchApi} from './fetch';
 
 export const ENDPOINTS = {
+  hdfsMkdir: '/hdfs/mkdir',
+  hdfsWrite: '/hdfs/write',
+  hdfsList: '/hdfs/list',
+  hdfsRead: '/hdfs/read',
+  hdfsRemove: '/hdfs/remove',
   jobList: '/job/list',
   jobDetail: '/job/info',
   jobStart: '/job/start',
@@ -28,7 +33,7 @@ export async function fetchJobDetail(uuid) {
   return jobDetail;
 }
 
-export async function fetchAllJobs() {
+export async function fetchJobsAll() {
   const jobListResponse = await fetchApi(ENDPOINTS.jobList);
   const jobList = jobListResponse.split('\n').reverse();
   let jobDetails = [];
@@ -46,7 +51,44 @@ export async function fetchAllJobs() {
   return jobDetails;
 }
 
-export async function callStartJob(name, key, input, output) {
-  const uuid = await fetchApi(ENDPOINTS.jobStart + `?name=${name}&key=${key}&input=${input}&output=${output}`);
+export async function fetchJobStart(name, key, input, output) {
+  const uuid = await fetchApi(
+    ENDPOINTS.jobStart +
+    `?name=${name}&key=${key}&input=${input}&output=${output}`
+  );
+
   return uuid.trim();
+}
+
+export async function fetchHDFSMkdir(path) {
+  return await fetchApi(ENDPOINTS.hdfsMkdir + `?path=${path}`);
+}
+
+export async function fetchHDFSWrite(from, to) {
+  const result = await fetchApi(ENDPOINTS.hdfsWrite + `?from=${from}&to=${to}`);
+  console.log(result);
+  return result;
+}
+
+export async function fetchHDFSRead(path) {
+  const result = await fetchApi(ENDPOINTS.hdfsRead + `?path=${path}`)
+    
+  return result.split('\n')
+    .map(line => line.trim())
+    .filter(Boolean);
+}
+
+export async function fetchHDFSList(path) {
+  const responseText = await fetchApi(ENDPOINTS.hdfsList + `?path=${path}`);
+  
+  const paths = responseText
+    .split('\n')
+    .map(path => path.replace('hdfs://namenode:8020', '').trim())
+    .filter(Boolean);
+  
+  return paths;
+}
+
+export async function fetchHDFSRemove(path) {
+  return await fetchApi(ENDPOINTS.hdfsRemove + `?path=${path}`);
 }

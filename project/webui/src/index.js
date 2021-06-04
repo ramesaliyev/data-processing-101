@@ -8,6 +8,7 @@ import JobsPage from './routes/jobs';
 import JobDetailPage from './routes/job-detail';
 import JobCreatePage from './routes/job-create';
 
+import 'react-virtualized/styles.css';
 import 'antd/dist/antd.css';
 import './index.css';
 

@@ -43,7 +43,6 @@ export default function JobDetailPage({history}) {
   return (
     <PageHeader
       title={jobDetail.name}
-      className="site-page-header"
       subTitle={jobDetail.key}
       onBack={() => history.goBack()}
       breadcrumb={breadcrumb}

@@ -1,6 +1,6 @@
-import {Button, Form, Select, Input, PageHeader} from 'antd';
+import {message, Button, Form, Select, Input, PageHeader} from 'antd';
 
-import {callStartJob} from '../core/api';
+import {fetchJobStart} from '../core/api';
 import {createBreadCrumb} from '../components/breadcrumb';
 
 export default function JobsPage({history}) {
@@ -8,7 +8,8 @@ export default function JobsPage({history}) {
 
   const onFormChange = async ({name, key, input, output}) => {
     if (name && key && input && output) {
-      const uuid = await callStartJob(name, key, input, output);
+      const uuid = await fetchJobStart(name, key, input, output);
+      message.success('Job succesfully created!');
       history.push(`/job/${uuid}`);
     }
   };
@@ -30,7 +31,6 @@ export default function JobsPage({history}) {
   return (
     <PageHeader
       title="New Job"
-      className="site-page-header"
       subTitle="Submit New Job"
       onBack={() => history.goBack()}
       breadcrumb={breadcrumb}
