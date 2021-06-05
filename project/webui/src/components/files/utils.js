@@ -33,6 +33,9 @@ export function parsePaths(records, options = {}) {
     $$meta: {key: '/', title: '/'},
   };
 
+  // remove root.
+  records = records.filter(r => r != 'dir:/');
+
   // parse
   for (const record of records) {
     const [type, filepath] = record.split(':');
