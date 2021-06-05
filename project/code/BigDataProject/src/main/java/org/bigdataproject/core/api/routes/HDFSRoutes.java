@@ -3,6 +3,7 @@ package org.bigdataproject.core.api.routes;
 import org.bigdataproject.core.api.server.Request;
 import org.bigdataproject.core.api.server.Response;
 import org.bigdataproject.core.api.server.Server;
+import org.bigdataproject.core.helpers.AppConfig;
 import org.bigdataproject.hadoop.HDFS;
 
 import java.io.IOException;
@@ -90,7 +91,8 @@ public class HDFSRoutes {
                 StringBuilder responseText = new StringBuilder();
                 List<String> fileList = HDFS.listFiles(path);
 
-                for(String file : fileList){
+                for (String file : fileList){
+                    file = file.replace(AppConfig.HDFSNameNode, "");
                     responseText.append(file).append("\n");
                 }
 

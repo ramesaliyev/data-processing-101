@@ -1,7 +1,7 @@
-const PORT = 4567;
+import {API_URL} from '../config';
 
 function resolveURL(path) {
-  return `http://localhost:${PORT}${path}`;
+  return `${API_URL}${path}`;
 }
 
 function fetchUrl(resource, init) {

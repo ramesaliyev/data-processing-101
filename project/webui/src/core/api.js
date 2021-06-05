@@ -87,7 +87,7 @@ export async function fetchHDFSList(path) {
   
   const paths = responseText
     .split('\n')
-    .map(path => path.replace('hdfs://namenode:8020', '').trim())
+    .map(path => path.trim())
     .filter(Boolean);
   
   return paths;
