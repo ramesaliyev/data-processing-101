@@ -60,7 +60,7 @@ export default function JobDetailPage({history}) {
       extra={[
         <Button 
           ghost
-          disabled={removingInProgress}
+          disabled={removingInProgress || !jobDetail.done}
           onClick={cloneAndRunAgain}
           loading={cloningInProgress}
           key="clone"
@@ -79,6 +79,7 @@ export default function JobDetailPage({history}) {
           <Button
             danger
             type="dashed"
+            disabled={cloningInProgress || !jobDetail.done}
             loading={removingInProgress}
           >
             Delete

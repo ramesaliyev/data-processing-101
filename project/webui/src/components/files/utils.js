@@ -21,7 +21,7 @@ function toArray(tree) {
   return root;
 }
 
-export function parsePaths(records) {
+export function parsePaths(records, options = {}) {
   const tree = {
     $$meta: {key: '/', title: '/'},
   };
@@ -47,6 +47,7 @@ export function parsePaths(records) {
       key: decodeDotSafe(path.join(...['/', ...parts])),
       isLeaf: type === 'file',
       leafNodeType: true,
+      disabled: options.disableLeafs,
     });
   }
 

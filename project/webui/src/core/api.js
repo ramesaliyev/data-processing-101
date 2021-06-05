@@ -2,8 +2,9 @@ import orderBy from 'lodash/orderBy';
 import {fetchApi} from './fetch';
 
 export const ENDPOINTS = {
+  fsList: '/fs/list',
   hdfsMkdir: '/hdfs/mkdir',
-  hdfsWrite: '/hdfs/write',
+  hdfsCopy: '/hdfs/copy',
   hdfsList: '/hdfs/list',
   hdfsRead: '/hdfs/read',
   hdfsRemove: '/hdfs/remove',
@@ -69,10 +70,8 @@ export async function fetchHDFSMkdir(path) {
   return await fetchApi(ENDPOINTS.hdfsMkdir + `?path=${path}`);
 }
 
-export async function fetchHDFSWrite(from, to) {
-  const result = await fetchApi(ENDPOINTS.hdfsWrite + `?from=${from}&to=${to}`);
-  console.log(result);
-  return result;
+export async function fetchHDFSCopy(from, to) {
+  return await fetchApi(ENDPOINTS.hdfsCopy + `?from=${from}&to=${to}`);
 }
 
 export async function fetchHDFSRead(path) {
@@ -96,4 +95,15 @@ export async function fetchHDFSList(path) {
 
 export async function fetchHDFSRemove(path) {
   return await fetchApi(ENDPOINTS.hdfsRemove + `?path=${path}`);
+}
+
+export async function fetchFSList(path) {
+  const responseText = await fetchApi(ENDPOINTS.fsList + `?path=${path}`);
+  
+  const paths = responseText
+    .split('\n')
+    .filter(path => !path.split('/').pop().trim().startsWith('.'))
+    .filter(Boolean)
+  
+  return paths;
 }

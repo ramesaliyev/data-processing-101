@@ -79,7 +79,7 @@ public class HDFS {
         return fileContent;
     }
 
-    public static void writeFile(String fromPath, String toPath) throws IOException {
+    public static void copyFile(String fromPath, String toPath) throws IOException {
         FSDataOutputStream fsDataOutputStream = HDFS.fileSystem.create(new Path(toPath),true);
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fsDataOutputStream, StandardCharsets.UTF_8));
         BufferedReader bufferedReader = new BufferedReader(new FileReader(fromPath));
@@ -88,7 +88,7 @@ public class HDFS {
         bufferedReader.close();
     }
 
-    public static void appendFile(String fromPath, String toPath) throws IOException {
+    public static void copyAppendFile(String fromPath, String toPath) throws IOException {
         FSDataOutputStream fsDataOutputStream = HDFS.fileSystem.append(new Path(toPath));
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fsDataOutputStream,StandardCharsets.UTF_8));
         BufferedReader bufferedReader = new BufferedReader(new FileReader(fromPath));

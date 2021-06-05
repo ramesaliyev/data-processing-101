@@ -1,7 +1,5 @@
 package org.bigdataproject.core.api.routes;
 
-import org.apache.hadoop.fs.LocatedFileStatus;
-import org.apache.hadoop.fs.RemoteIterator;
 import org.bigdataproject.core.api.server.Request;
 import org.bigdataproject.core.api.server.Response;
 import org.bigdataproject.core.api.server.Server;
@@ -14,10 +12,10 @@ public class HDFSRoutes {
     public HDFSRoutes(Server server) {
         server.get("/hdfs/mkdir", this::routeHDFSCreateDirectory);
         server.get("/hdfs/remove", this::routeHDFSRemovePath);
-        server.get("/hdfs/write", this::routeHDFSWriteFile);
+        server.get("/hdfs/copy", this::routeHDFSCopyFile);
         server.get("/hdfs/read", this::routeHDFSReadFile);
         server.get("/hdfs/list", this::routeHDFSListFiles);
-        server.get("/hdfs/append", this::routeHDFSAppendFile);
+        server.get("/hdfs/copyAppend", this::routeHDFSCopyAppendFile);
     }
 
     public void routeHDFSCreateDirectory(Request req, Response res) {
@@ -31,6 +29,8 @@ public class HDFSRoutes {
                 res.sendError(e);
                 e.printStackTrace();
             }
+        } else {
+            res.sendEmpty();
         }
     }
 
@@ -45,21 +45,25 @@ public class HDFSRoutes {
                 res.sendError(e);
                 e.printStackTrace();
             }
+        } else {
+            res.sendEmpty();
         }
     }
 
-    public void routeHDFSWriteFile(Request req, Response res) {
+    public void routeHDFSCopyFile(Request req, Response res) {
         String from = req.params.get("from");
         String to = req.params.get("to");
 
         if (from != null && to != null) {
             try {
-                HDFS.writeFile(from, to);
+                HDFS.copyFile(from, to);
                 res.send("ok");
             } catch (IOException e) {
                 res.sendError(e);
                 e.printStackTrace();
             }
+        } else {
+            res.sendEmpty();
         }
     }
 
@@ -73,6 +77,8 @@ public class HDFSRoutes {
                 res.sendError(e);
                 e.printStackTrace();
             }
+        } else {
+            res.sendEmpty();
         }
     }
 
@@ -82,8 +88,8 @@ public class HDFSRoutes {
         if (path != null) {
             try {
                 StringBuilder responseText = new StringBuilder();
-
                 List<String> fileList = HDFS.listFiles(path);
+
                 for(String file : fileList){
                     responseText.append(file).append("\n");
                 }
@@ -93,21 +99,25 @@ public class HDFSRoutes {
                 res.sendError(e);
                 e.printStackTrace();
             }
+        } else {
+            res.sendEmpty();
         }
     }
 
-    public void routeHDFSAppendFile(Request req, Response res) {
+    public void routeHDFSCopyAppendFile(Request req, Response res) {
         String from = req.params.get("from");
         String to = req.params.get("to");
 
         if (from != null && to != null) {
             try {
-                HDFS.appendFile(from, to);
+                HDFS.copyAppendFile(from, to);
                 res.send("ok");
             } catch (IOException e) {
                 res.sendError(e);
                 e.printStackTrace();
             }
+        } else {
+            res.sendEmpty();
         }
     }
 }

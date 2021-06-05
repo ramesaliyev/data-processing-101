@@ -70,8 +70,8 @@ export default function HDFSTab({history, setActiveTab}) {
 
   return (
     <PageHeader
-      title="Files"
-      subTitle="Local and HDFS Files"
+      title="HDFS Files"
+      subTitle="File Browser"
       onBack={() => history.goBack()}
       breadcrumb={breadcrumb}
       extra={[

@@ -24,6 +24,10 @@ public class Response {
         os.close();
     }
 
+    public void empty() throws IOException {
+        httpExchange.getResponseBody().close();
+    }
+
     public void sendError(Exception exception) {
         try {
             this.end("error: " + exception.getClass().getSimpleName());
@@ -35,6 +39,14 @@ public class Response {
     public void send(String responseText) {
         try {
             this.end(responseText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendEmpty() {
+        try {
+            this.empty();
         } catch (IOException e) {
             e.printStackTrace();
         }
