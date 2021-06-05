@@ -10,6 +10,7 @@ export const ENDPOINTS = {
   jobList: '/job/list',
   jobDetail: '/job/info',
   jobStart: '/job/start',
+  jobRemove: '/job/remove',
 };
 
 export async function fetchJobDetail(uuid) {
@@ -58,6 +59,10 @@ export async function fetchJobStart(name, key, input, output) {
   );
 
   return uuid.trim();
+}
+
+export async function fetchJobRemove(uuid) {
+  return await fetchApi(ENDPOINTS.jobRemove + `?uuid=${uuid}`);
 }
 
 export async function fetchHDFSMkdir(path) {

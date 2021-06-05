@@ -50,8 +50,9 @@ docker exec -ti hadoop_resourcemanager /bin/bash
 
 In `resourcemanager` run jar with Hadoop:
 ```
-hadoop jar /hadoop/host_shared/code/bigdataproject.jar org.bigdataproject.App
+hadoop jar /hadoop/host_shared/code/bigdataproject.jar org.bigdataproject.App 4567
 ```
+> 4567 is the port number, default is: 4567. also remember to expose port number from docker-compose.
 
 Navigate into `webui` folder and first Build then start WebUI:
 ```

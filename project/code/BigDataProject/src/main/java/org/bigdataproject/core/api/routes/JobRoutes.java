@@ -11,6 +11,7 @@ import org.bigdataproject.core.api.server.Response;
 import org.bigdataproject.core.api.server.Server;
 import org.bigdataproject.core.job.JobCatalog;
 import org.bigdataproject.core.job.JobRecord;
+import org.bigdataproject.hadoop.HDFS;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class JobRoutes {
         server.get("/job/info", this::routeGetJobInfo);
         server.get("/job/isCompleted", this::routeIsJobCompleted);
         server.get("/job/list", this::routeListJobs);
+        server.get("/job/remove", this::routeRemoveJob);
     }
 
     public void routeStartJob(Request req, Response res) {
@@ -88,5 +90,20 @@ public class JobRoutes {
         }
 
         res.send(responseText.toString());
+    }
+
+    public void routeRemoveJob(Request req, Response res) {
+        JobRecord jobRecord = this.jobRecords.get(req.params.get("uuid"));
+
+        try {
+            HDFS.removePath(jobRecord.getOutput());
+        } catch (IOException e) {
+            e.printStackTrace();
+            res.sendError(e);
+            return;
+        }
+
+        this.jobRecords.remove(jobRecord.getUUID());
+        res.send("ok");
     }
 }

@@ -1,37 +1,20 @@
 import {useParams} from "react-router-dom";
 import {useState} from 'react';
-import {message, Button, Descriptions, Dropdown, Menu, PageHeader, Spin} from 'antd';
-import {EllipsisOutlined} from '@ant-design/icons';
+import {message, Button, Descriptions, Popconfirm, PageHeader, Spin} from 'antd';
 
-import {fetchJobStart} from '../core/api';
+import {fetchJobStart, fetchJobRemove} from '../core/api';
 import {swrJobDetail} from '../core/swr';
 import {getJobCloneDetails} from '../core/utils';
 import {createBreadCrumb} from '../components/breadcrumb';
 import JobTag, {JobBadge} from '../components/jobtag'
 import FileContentDrawer from '../components/files/file-content-drawer';
 
-const JobOptionsDropdown = () => (
-  <Dropdown
-    key="more"
-    overlay={
-      <Menu>
-        <Menu.Item>
-          Delete Job
-        </Menu.Item>
-      </Menu>
-    }
-  >
-    <Button style={{border: 'none', padding: 0}}>
-      <EllipsisOutlined style={{fontSize: 20, verticalAlign: 'top'}} />
-    </Button>
-  </Dropdown>
-);
-
 export default function JobDetailPage({history}) {
   const {uuid} = useParams();
   const [jobDetail, isJobDetailLoading, isJobDetailErrored] = swrJobDetail(uuid);
   const [selectedFilePath, setSelectedFilePath] = useState(null);
   const [cloningInProgress, setCloningInProgress] = useState(false);
+  const [removingInProgress, setRemovingInProgress] = useState(false);
 
   if (isJobDetailLoading || !jobDetail) {
     return (
@@ -59,6 +42,14 @@ export default function JobDetailPage({history}) {
     history.push(`/job/${uuid}`);
   };  
 
+  const removeJob = async () => {
+    setRemovingInProgress(true);
+    await fetchJobRemove(jobDetail.uuid);
+    setRemovingInProgress(false);
+    message.success('Job succesfully removed!');
+    history.push(`/jobs`);
+  };
+
   return (
     <PageHeader
       title={jobDetail.name}
@@ -68,13 +59,31 @@ export default function JobDetailPage({history}) {
       tags={<JobTag job={jobDetail} />}
       extra={[
         <Button 
+          ghost
+          disabled={removingInProgress}
           onClick={cloneAndRunAgain}
           loading={cloningInProgress}
           key="clone"
+          type="primary"
         >
           Clone and Run Again
         </Button>,
-        <JobOptionsDropdown key="more" />
+        <Popconfirm
+          key="remove"
+          placement="bottom"
+          onConfirm={removeJob}
+          title="Are you sure to delete this job?"
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button
+            danger
+            type="dashed"
+            loading={removingInProgress}
+          >
+            Delete
+          </Button>
+        </Popconfirm>
       ]}
     >
       <Descriptions bordered size="small" column={2} labelStyle={{fontWeight:'bold'}}>
