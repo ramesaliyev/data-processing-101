@@ -2,6 +2,7 @@ package org.bigdataproject.core.job;
 
 import org.apache.hadoop.mapreduce.Job;
 import org.bigdataproject.hadoop.mapreduce.movielens.RatingsMean;
+import org.bigdataproject.hadoop.mapreduce.movielens.RatingsMedian;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,5 +23,13 @@ public class JobCatalog {
         job.setReducerClass(RatingsMean.JobReducer.class);
         job.setOutputKeyClass(RatingsMean.OutputKeyClass);
         job.setOutputValueClass(RatingsMean.OutputValueClass);
+    }
+
+    public static void configRatingsMedian(Job job) {
+        job.setJarByClass(RatingsMedian.class);
+        job.setMapperClass(RatingsMedian.JobMapper.class);
+        job.setReducerClass(RatingsMedian.JobReducer.class);
+        job.setOutputKeyClass(RatingsMedian.OutputKeyClass);
+        job.setOutputValueClass(RatingsMedian.OutputValueClass);
     }
 }
