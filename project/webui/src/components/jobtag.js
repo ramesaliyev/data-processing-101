@@ -26,3 +26,15 @@ export function JobBadge({job, text}) {
   
   return <Badge status="error" text={stateText}></Badge>
 }
+
+export function JobKeyTag({job}) {
+  const preset = {
+    RatingsMean: 'purple',
+    RatingsMedian: 'cyan',
+    RatingsMode: 'magenta',
+    RatingsRange: 'volcano',
+    RatingsStandardDeviation: 'geekblue',
+  };
+
+  return <Tag color={preset[job.key]}>{job.key}</Tag>;
+}

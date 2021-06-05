@@ -1,30 +1,42 @@
-import {Menu, Breadcrumb} from 'antd';
+import {Breadcrumb, Divider, Row, Col, Dropdown, Menu} from 'antd';
 
 const MainMenu = (
   <Menu>
-    <Menu.Item>
-      <a href="/jobs">Jobs</a>
+    <Menu.Item key="jobs">
+      <a href="/jobs">Job Manager</a>
     </Menu.Item>
-    <Menu.Item>
-      <a href="/files">Files</a>
+    <Menu.Item key="files">
+      <a href="/files">File Browser</a>
     </Menu.Item>
   </Menu>
 );
 
 export function createBreadCrumb(items = []) {
   return (
-    <Breadcrumb>
-      <Breadcrumb.Item overlay={MainMenu}>
-        <a>Menu</a>
-      </Breadcrumb.Item>
-      {items.map(item =>
-        <Breadcrumb.Item key={item.route || item.name}>
-          {item.route ?
-            <a href={item.route}>{item.name}</a> :
-            item.name  
-          }
-        </Breadcrumb.Item>
-      )}
-    </Breadcrumb>
+    <Row justify="start" style={{paddingBottom: '10px'}}>
+      <Col>
+        <Dropdown
+          overlay={MainMenu}
+          trigger={['click']}
+        >
+          <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+            Menu
+          </a>
+        </Dropdown>
+      </Col>
+      <Col>
+        <Breadcrumb>
+          <Breadcrumb.Separator>/</Breadcrumb.Separator>
+          {items.map(item =>
+            <Breadcrumb.Item key={item.route || item.name}>
+              {item.route ?
+                <a href={item.route}>{item.name}</a> :
+                item.name  
+              }
+            </Breadcrumb.Item>
+          )}
+        </Breadcrumb>
+      </Col>
+    </Row>
   );
 }

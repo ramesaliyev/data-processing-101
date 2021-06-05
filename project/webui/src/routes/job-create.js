@@ -22,8 +22,8 @@ export default function JobsPage({history}) {
   };
 
   const initialValues = {
-    input: '/movielens/ratings.csv',
-    output: '/movielensresults'
+    input: '/movielenstest/ratings.csv',
+    output: '/movielenstestresults'
   }
 
   const breadcrumb = createBreadCrumb([
@@ -56,14 +56,14 @@ export default function JobsPage({history}) {
             <Select.Option value="RatingsStandardDeviation">RatingsStandardDeviation</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item name="name" label="Name" disabled={inProgress}>
-          <Input placeholder="Enter a Job Name" />
+        <Form.Item name="name" label="Name">
+          <Input placeholder="Enter a Job Name" disabled={inProgress} />
         </Form.Item>
-        <Form.Item name="input" label="Input File" disabled={inProgress}>
-          <Input />
+        <Form.Item name="input" label="Input File">
+          <Input disabled={inProgress} />
         </Form.Item>
-        <Form.Item name="output" label="Output Path" disabled={inProgress}>
-          <Input />
+        <Form.Item name="output" label="Output Path">
+          <Input disabled={inProgress} />
         </Form.Item>
         <Form.Item label="" colon={false}>
           <Button type="primary" htmlType="submit" loading={inProgress} style={{marginRight:'8px'}}>

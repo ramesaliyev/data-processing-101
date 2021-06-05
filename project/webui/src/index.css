@@ -31,3 +31,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.no-tag-margin .ant-tag {
+  margin-right: 0;
+}

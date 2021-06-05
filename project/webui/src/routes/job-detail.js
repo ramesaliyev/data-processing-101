@@ -94,9 +94,14 @@ export default function JobDetailPage({history}) {
           <JobBadge job={jobDetail} />  
         </Descriptions.Item>
         <Descriptions.Item label="Output">
-          <a onClick={() => setSelectedFilePath(`${jobDetail.output}/part-r-00000`)}>
-            {jobDetail.output}/part-r-00000
-          </a>
+          {(jobDetail.done && jobDetail.state == 'SUCCEEDED') ?
+            <a onClick={() => setSelectedFilePath(`${jobDetail.output}/part-r-00000`)}>
+              {jobDetail.output}/part-r-00000
+            </a>
+            :
+            "-"
+          }
+          
         </Descriptions.Item>
       </Descriptions>
       <FileContentDrawer

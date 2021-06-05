@@ -3,7 +3,7 @@ import {PlusOutlined, CheckCircleOutlined} from '@ant-design/icons';
 
 import {swrAllJobs} from '../core/swr';
 import {createBreadCrumb} from '../components/breadcrumb';
-import JobTag from '../components/jobtag'
+import JobTag, {JobKeyTag} from '../components/jobtag'
 
 function JobsPageHeader({children}) {
   return (
@@ -49,7 +49,11 @@ function JobsList({jobList, isJobListLoading, isJobListErrored}) {
       dataSource={jobList}
       renderItem={item =>
         <List.Item
-          actions={[<JobTag job={item} />]}
+          className="no-tag-margin"
+          actions={[
+            <JobKeyTag job={item} />,
+            <JobTag job={item} />,
+          ]}
         >
           <a href={'/job/'+ item.uuid}>{item.name}</a>
         </List.Item>

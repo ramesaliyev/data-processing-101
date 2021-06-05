@@ -4,6 +4,8 @@ import org.apache.hadoop.mapreduce.Job;
 import org.bigdataproject.hadoop.mapreduce.movielens.RatingsMean;
 import org.bigdataproject.hadoop.mapreduce.movielens.RatingsMedian;
 import org.bigdataproject.hadoop.mapreduce.movielens.RatingsMode;
+import org.bigdataproject.hadoop.mapreduce.movielens.RatingsRange;
+import org.bigdataproject.hadoop.mapreduce.movielens.RatingsStandardDeviation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -40,5 +42,21 @@ public class JobCatalog {
         job.setReducerClass(RatingsMode.JobReducer.class);
         job.setOutputKeyClass(RatingsMode.OutputKeyClass);
         job.setOutputValueClass(RatingsMode.OutputValueClass);
+    }
+
+    public static void configRatingsRange(Job job) {
+        job.setJarByClass(RatingsRange.class);
+        job.setMapperClass(RatingsRange.JobMapper.class);
+        job.setReducerClass(RatingsRange.JobReducer.class);
+        job.setOutputKeyClass(RatingsRange.OutputKeyClass);
+        job.setOutputValueClass(RatingsRange.OutputValueClass);
+    }
+
+    public static void configRatingsStandardDeviation(Job job) {
+        job.setJarByClass(RatingsStandardDeviation.class);
+        job.setMapperClass(RatingsStandardDeviation.JobMapper.class);
+        job.setReducerClass(RatingsStandardDeviation.JobReducer.class);
+        job.setOutputKeyClass(RatingsStandardDeviation.OutputKeyClass);
+        job.setOutputValueClass(RatingsStandardDeviation.OutputValueClass);
     }
 }
