@@ -11,11 +11,18 @@ function decodeDotSafe(string) {
   return string.replace(/@@@/g, '.');
 }
 
-function toArray(tree) {
+function toArray(tree, options = {}) {
   const root = {
     ...tree.$$meta,
+    selectable: !options.nonSelectableFolders,
     children: Object.values(omit(tree, ['$$meta']))
-      .map(v => v.leafNodeType ? v : toArray(v)),
+      .map(node => {
+        if (!node.leafNodeType) {
+          return toArray(node, options);
+        }
+
+        return node;
+      }),
   };
 
   return root;
@@ -47,10 +54,10 @@ export function parsePaths(records, options = {}) {
       key: decodeDotSafe(path.join(...['/', ...parts])),
       isLeaf: type === 'file',
       leafNodeType: true,
-      disabled: options.disableLeafs,
+      disabled: options.disableFiles && type === 'file',
     });
   }
 
   // format as array.
-  return [toArray(tree)];
+  return [toArray(tree, options)];
 }

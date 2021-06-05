@@ -41,7 +41,7 @@ export default function LocalTab({history, setActiveTab}) {
   const onCopy = async () => {
     toggleCopyFileModal(true);
     const HDFSFiles = await fetchHDFSList('/');
-    setHDFSFiles(parsePaths(HDFSFiles, {disableLeafs:true})); 
+    setHDFSFiles(parsePaths(HDFSFiles, {disableFiles:true})); 
   };
 
   const copyFile = async () => {
