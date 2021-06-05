@@ -21,9 +21,11 @@ Modify `/etc/hosts` files on each node and your local machine, add configuration
 192.168.64.6 hworker1
 192.168.64.7 hworker2
 ```
+
 > - Change ip adresses with your own.
-> - Note that sometimes ip addresses like `127.0.1.1` could cause problem.
-> - Use Private Network IP addresses here if possible.
+> - Maybe Private Network IP addresses could be used here (not tested).
+
+Note that ip addresses like `127.0.1.1` could cause problems. So remove them from hosts file if they exist for hostnames given above.
 
 **Step 2:** Create non-root user with sudo privileges. In this walkthrough, default non-root user `ubuntu` will be used.
 
@@ -401,7 +403,14 @@ start-yarn.sh
 * Use `yarn application -list` to see running applications.
 * Navigate to http://hmaster:8088 to see Web UI.
 
-## 11. Test Hadoop
+## 11. Troubleshooting
+
+> [main] INFO  org.apache.hadoop.ipc.Client - Retrying connect to server: 0.0.0.0/0.0.0.0:10020. Already tried 0 time(s); retry policy is RetryUpToMaximumCountWithFixedSleep(maxRetries=10, sleepTime=1 SECONDS)
+```
+mr-jobhistory-daemon.sh start historyserver
+```
+
+## 12. Test Hadoop
 
 To test hadoop we'll use simply word-count example.
 
