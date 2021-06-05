@@ -1,10 +1,12 @@
 import {useParams} from "react-router-dom";
+import {useState} from 'react';
 import {Button, Descriptions, Dropdown, Menu, PageHeader, Spin} from 'antd';
 import {EllipsisOutlined} from '@ant-design/icons';
 
 import {swrJobDetail} from '../core/swr';
 import {createBreadCrumb} from '../components/breadcrumb';
 import JobTag, {JobBadge} from '../components/jobtag'
+import FileContentDrawer from '../components/files/file-content-drawer';
 
 const JobOptionsDropdown = () => (
   <Dropdown
@@ -26,6 +28,7 @@ const JobOptionsDropdown = () => (
 export default function JobDetailPage({history}) {
   const {uuid} = useParams();
   const [jobDetail, isJobDetailLoading, isJobDetailErrored] = swrJobDetail(uuid);
+  const [selectedFilePath, setSelectedFilePath] = useState(null);
 
   if (isJobDetailLoading || !jobDetail) {
     return (
@@ -39,6 +42,10 @@ export default function JobDetailPage({history}) {
     {name:'Jobs', route:'/'},
     {name:jobDetail.name, route:`/job/${uuid}`}
   ]);
+
+  const onFileDrawerClose = () => {
+    setSelectedFilePath(null);
+  };
 
   return (
     <PageHeader
@@ -60,12 +67,25 @@ export default function JobDetailPage({history}) {
         <Descriptions.Item label="Completed">
           <JobBadge job={jobDetail} text={jobDetail.done ? 'True' : 'False'} />  
         </Descriptions.Item>
-        <Descriptions.Item label="Input">{jobDetail.input}</Descriptions.Item>
+        <Descriptions.Item label="Input">
+          <a onClick={() => setSelectedFilePath(jobDetail.input)}>
+            {jobDetail.input}
+          </a>
+        </Descriptions.Item>
         <Descriptions.Item label="State">
           <JobBadge job={jobDetail} />  
         </Descriptions.Item>
-        <Descriptions.Item label="Output">{jobDetail.output}</Descriptions.Item>
+        <Descriptions.Item label="Output">
+          <a onClick={() => setSelectedFilePath(`${jobDetail.output}/part-r-00000`)}>
+            {jobDetail.output}/part-r-00000
+          </a>
+        </Descriptions.Item>
       </Descriptions>
+      <FileContentDrawer
+        filePath={selectedFilePath}
+        onClose={onFileDrawerClose}
+        isVisible={selectedFilePath}
+      />
     </PageHeader>
   );
 }

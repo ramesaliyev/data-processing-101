@@ -1,13 +1,16 @@
+import {useState} from 'react';
 import {message, Button, Form, Select, Input, PageHeader} from 'antd';
 
 import {fetchJobStart} from '../core/api';
 import {createBreadCrumb} from '../components/breadcrumb';
 
 export default function JobsPage({history}) {
+  const [inProgress, setInprogress] = useState(false);
   const [form] = Form.useForm();
 
-  const onFormChange = async ({name, key, input, output}) => {
+  const onFinish = async ({name, key, input, output}) => {
     if (name && key && input && output) {
+      setInprogress(true);
       const uuid = await fetchJobStart(name, key, input, output);
       message.success('Job succesfully created!');
       history.push(`/job/${uuid}`);
@@ -38,31 +41,35 @@ export default function JobsPage({history}) {
       <>
       <Form
         form={form} 
-        onFinish={onFormChange}
+        onFinish={onFinish}
         wrapperCol={{span: 14}}
         layout="vertical"
         initialValues={initialValues}
         size={'default'}
       >
         <Form.Item name="key" label="Job">
-          <Select placeholder="Select a Job">
+          <Select placeholder="Select a Job" disabled={inProgress}>
             <Select.Option value="RatingsMean">RatingsMean</Select.Option>
+            <Select.Option value="RatingsMedian">RatingsMedian</Select.Option>
+            <Select.Option value="RatingsMode">RatingsMode</Select.Option>
+            <Select.Option value="RatingsRange">RatingsRange</Select.Option>
+            <Select.Option value="RatingsStandardDeviation">RatingsStandardDeviation</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item name="name" label="Name">
+        <Form.Item name="name" label="Name" disabled={inProgress}>
           <Input placeholder="Enter a Job Name" />
         </Form.Item>
-        <Form.Item name="input" label="Input File">
+        <Form.Item name="input" label="Input File" disabled={inProgress}>
           <Input />
         </Form.Item>
-        <Form.Item name="output" label="Output Path">
+        <Form.Item name="output" label="Output Path" disabled={inProgress}>
           <Input />
         </Form.Item>
         <Form.Item label="" colon={false}>
-          <Button type="primary" htmlType="submit" style={{marginRight:'8px'}}>
+          <Button type="primary" htmlType="submit" loading={inProgress} style={{marginRight:'8px'}}>
             Submit
           </Button>
-          <Button htmlType="reset" onClick={onReset}>
+          <Button htmlType="reset" onClick={onReset} disabled={inProgress}>
             Reset
           </Button>
         </Form.Item>

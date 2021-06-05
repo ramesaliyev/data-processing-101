@@ -15,7 +15,7 @@ export function createBreadCrumb(items = []) {
   return (
     <Breadcrumb>
       <Breadcrumb.Item overlay={MainMenu}>
-        Menu
+        <a>Menu</a>
       </Breadcrumb.Item>
       {items.map(item =>
         <Breadcrumb.Item key={item.route || item.name}>

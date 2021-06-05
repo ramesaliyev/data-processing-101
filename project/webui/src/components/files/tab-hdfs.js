@@ -1,13 +1,12 @@
 import path from 'path';
 import {useState, useMemo} from 'react';
-import {message, Button, Drawer, Input, Modal, PageHeader, Popconfirm, Spin, Tabs, Tree} from 'antd';
-
+import {message, Button, Input, Modal, PageHeader, Popconfirm, Spin, Tabs, Tree} from 'antd';
 
 import {swrHDFSList} from '../../core/swr';
-import {fetchHDFSMkdir, fetchHDFSRead, fetchHDFSRemove} from '../../core/api'; 
+import {fetchHDFSMkdir, fetchHDFSRemove} from '../../core/api'; 
 import {parsePaths} from './utils';
 import {createBreadCrumb} from '../breadcrumb';
-import VirtualTable from '../lib/virtualtable';
+import FileContentDrawer from './file-content-drawer';
 
 const {TabPane} = Tabs;
 const {DirectoryTree} = Tree;
@@ -21,7 +20,6 @@ export default function HDFSTab({history, setActiveTab}) {
   const [mkdirModalVisible, toggleMkdirModal] = useState(false);
   const [newDirName, setNewDirName] = useState('');
   const [fileDrawerVisible, toggleFileDrawer] = useState(false);
-  const [fileContents, setFileContents] = useState(null);
 
   const breadcrumb = createBreadCrumb([
     {name:'Files', route:'/files'},
@@ -37,12 +35,13 @@ export default function HDFSTab({history, setActiveTab}) {
     selectNode(node);
   };
 
+  const onExpand = () => {
+    setEnabled({});
+    selectNode(null);
+  };
+
   const onOpen = async () => {
-    setInProgress({open: true});
     toggleFileDrawer(true);
-    const readContent = await fetchHDFSRead(selectedNode.key);
-    setFileContents(readContent);
-    setInProgress({});
   };
 
   const onFileDrawerClose = () => {
@@ -79,7 +78,6 @@ export default function HDFSTab({history, setActiveTab}) {
         <Button
           key="1"
           type="primary"
-          loading={inProgress.open}
           disabled={!enabled.open}
           onClick={onOpen}
         >
@@ -122,6 +120,7 @@ export default function HDFSTab({history, setActiveTab}) {
               expandAction="doubleClick"
               defaultExpandedKeys={['/']}
               onSelect={onSelect}
+              onExpand={onExpand}
               treeData={parsedPaths}
             />
           }
@@ -134,24 +133,11 @@ export default function HDFSTab({history, setActiveTab}) {
           >
             <Input value={newDirName} placeholder="Input directory name" onChange={e => setNewDirName(e.target.value)} />
           </Modal>
-          <Drawer
-            title={selectedNode && selectedNode.key}
-            placement="right"
-            width={800}
-            closable={true}
+          <FileContentDrawer
+            filePath={selectedNode && selectedNode.key}
             onClose={onFileDrawerClose}
-            visible={fileDrawerVisible}
-          >
-            {inProgress.open ?
-              <div className="spin-center">
-                <Spin size="large" />
-              </div>
-              :
-              <VirtualTable
-                list={fileContents}
-              />
-            }
-          </Drawer>
+            isVisible={fileDrawerVisible}
+          />
         </TabPane>
         <TabPane tab="Local" key="Local"></TabPane>
       </Tabs>
