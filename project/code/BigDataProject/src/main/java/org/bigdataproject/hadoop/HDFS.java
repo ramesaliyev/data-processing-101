@@ -3,6 +3,7 @@ package org.bigdataproject.hadoop;
 import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
+import org.bigdataproject.core.helpers.AppConfig;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -24,7 +25,7 @@ public class HDFS {
 
     public static Configuration getConfiguration() {
         Configuration configuration = new Configuration();
-        configuration.set("fs.defaultFS", "hdfs://namenode:8020");
+        configuration.set("fs.defaultFS", AppConfig.HDFSNameNode);
         return configuration;
     }
 
