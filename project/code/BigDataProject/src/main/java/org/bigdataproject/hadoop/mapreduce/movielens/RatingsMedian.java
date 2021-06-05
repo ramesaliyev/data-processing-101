@@ -1,8 +1,8 @@
 package org.bigdataproject.hadoop.mapreduce.movielens;
 
-import org.apache.hadoop.io.DoubleWritable;
 import org.bigdataproject.core.helpers.Utils;
 
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;

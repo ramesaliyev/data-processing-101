@@ -1,9 +1,11 @@
 import {useParams} from "react-router-dom";
 import {useState} from 'react';
-import {Button, Descriptions, Dropdown, Menu, PageHeader, Spin} from 'antd';
+import {message, Button, Descriptions, Dropdown, Menu, PageHeader, Spin} from 'antd';
 import {EllipsisOutlined} from '@ant-design/icons';
 
+import {fetchJobStart} from '../core/api';
 import {swrJobDetail} from '../core/swr';
+import {getJobCloneDetails} from '../core/utils';
 import {createBreadCrumb} from '../components/breadcrumb';
 import JobTag, {JobBadge} from '../components/jobtag'
 import FileContentDrawer from '../components/files/file-content-drawer';
@@ -29,6 +31,7 @@ export default function JobDetailPage({history}) {
   const {uuid} = useParams();
   const [jobDetail, isJobDetailLoading, isJobDetailErrored] = swrJobDetail(uuid);
   const [selectedFilePath, setSelectedFilePath] = useState(null);
+  const [cloningInProgress, setCloningInProgress] = useState(false);
 
   if (isJobDetailLoading || !jobDetail) {
     return (
@@ -47,6 +50,15 @@ export default function JobDetailPage({history}) {
     setSelectedFilePath(null);
   };
 
+  const cloneAndRunAgain = async () => {
+    setCloningInProgress(true);
+    const cloneJob = getJobCloneDetails(jobDetail);
+    const uuid = await fetchJobStart(cloneJob.name, cloneJob.key, cloneJob.input, cloneJob.output);
+    setCloningInProgress(false);
+    message.success('Job succesfully cloned and started!');
+    history.push(`/job/${uuid}`);
+  };  
+
   return (
     <PageHeader
       title={jobDetail.name}
@@ -55,7 +67,13 @@ export default function JobDetailPage({history}) {
       breadcrumb={breadcrumb}
       tags={<JobTag job={jobDetail} />}
       extra={[
-        <Button key="1">Clone and Run Again</Button>,
+        <Button 
+          onClick={cloneAndRunAgain}
+          loading={cloningInProgress}
+          key="clone"
+        >
+          Clone and Run Again
+        </Button>,
         <JobOptionsDropdown key="more" />
       ]}
     >
