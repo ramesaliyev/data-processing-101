@@ -53,9 +53,6 @@ In `resourcemanager` run jar with Hadoop:
 hadoop jar /hadoop/host_shared/code/bigdataproject.jar org.bigdataproject.App
 ```
 
-> You can configure the application such as;
-> hadoop jar bigdataproject.jar org.bigdataproject.App 4567 hdfs://hmaster:9000
-
 Navigate into `webui` folder and first Build then start WebUI:
 ```
 npm install
@@ -79,4 +76,14 @@ hdfs dfs -cat /path/*
 Compile jar with all dependencies:
 ```
 mvn clean compile assembly:single 
+```
+
+Run JAR with config:
+```
+hadoop jar bigdataproject.jar org.bigdataproject.App 4567 hdfs://hmaster:9000
+```
+
+Build WebUI with config:
+```
+REACT_APP_API_URL=http://hmaster:4567 npm run build
 ```
