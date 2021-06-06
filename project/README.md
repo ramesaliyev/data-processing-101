@@ -24,6 +24,7 @@ Following Hadoop screens will be available;
 - Namenode: http://localhost:8081
 - Resource Manager: http://localhost:8082
 - Node Manager 1: http://localhost:8083
+- Node Manager 2: http://localhost:8084
 
 > For regular initializations just run `docker-compose up`.
 
@@ -65,6 +66,10 @@ serve -s build
 See WebUI at http://localhost:3000
 
 > To understand how whole application operates you can examine API calls or read code.
+
+# Troubleshooting
+
+- If MapReduce job keeps getting `KILLED` everytime, try to decrease node count, for example remove `nodemanager2` from `docker-compose.yml`, not sure why but it can be about memory.
 
 # Help
 

@@ -23,7 +23,6 @@ services:
       - namenode
       - datanode1
       - datanode2
-      - datanode3
     ports:
       - 8082:8088
       - 4567:4567
@@ -37,7 +36,6 @@ services:
       - namenode
       - datanode1
       - datanode2
-      - datanode3
     volumes:
       - hadoop_historyserver:/hadoop/yarn/timeline
     env_file:
@@ -52,9 +50,22 @@ services:
       - namenode
       - datanode1
       - datanode2
-      - datanode3
     ports:
         - 8083:8042
+    env_file:
+      - ./hadoop.env
+    
+  nodemanager2:
+    image: bde2020/hadoop-nodemanager:1.1.0-hadoop2.7.1-java8
+    container_name: hadoop_nodemanager2
+    volumes:
+      - ./volumes/data:/hadoop/host_shared/data
+    depends_on:
+      - namenode
+      - datanode1
+      - datanode2
+    ports:
+        - 8084:8042
     env_file:
       - ./hadoop.env
   
@@ -77,20 +88,9 @@ services:
       - hadoop_datanode2:/hadoop/dfs/data
     env_file:
       - ./hadoop.env
-  
-  datanode3:
-    image: bde2020/hadoop-datanode:1.1.0-hadoop2.7.1-java8
-    container_name: hadoop_datanode3
-    depends_on:
-      - namenode
-    volumes:
-      - hadoop_datanode3:/hadoop/dfs/data
-    env_file:
-      - ./hadoop.env
 
 volumes:
   hadoop_namenode:
   hadoop_datanode1:
   hadoop_datanode2:
-  hadoop_datanode3:
   hadoop_historyserver:
