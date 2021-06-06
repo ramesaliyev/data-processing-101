@@ -73,7 +73,7 @@ export default function JobResults({jobDetails}) {
   const [metaData, setMetaData] = useState({});
 
   useEffect(async () => {
-    if (jobDetails.done) {
+    if (jobDetails.done && jobDetails.state === 'SUCCEEDED') {
       await prepareDB();
       let output = await fetchHDFSRead(`${jobDetails.output}/part-r-00000`);
       output = output.map(o => o.split(',').map(Number))
@@ -93,6 +93,12 @@ export default function JobResults({jobDetails}) {
   if (!jobDetails.done) {
     return (
       <div>Job result will be here when job completed.</div>
+    );
+  }
+
+  if (jobDetails.state !== 'SUCCEEDED') {
+    return (
+      <div>Job failed.</div>
     );
   }
 
