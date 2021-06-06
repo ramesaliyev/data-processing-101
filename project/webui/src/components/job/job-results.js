@@ -57,10 +57,10 @@ function ResultRow({movie, rating, style}) {
             <Statistic title="Our Rating" value={rating.toFixed("3")} />
           </Col>
           <Col flex="120px">
-            <Statistic title="TMDB Rating" value={tmdb.vote_average} />
+            <Statistic title="TMDb Rating" value={tmdb.vote_average} />
           </Col>
           <Col flex="120px">
-            <Statistic title="TMDB Popularity" value={tmdb.popularity} />
+            <Statistic title="TMDb Popularity" value={tmdb.popularity} />
           </Col>
         </Row>
         <p style={{paddingTop:'10px'}}>{tmdb.overview}</p>
