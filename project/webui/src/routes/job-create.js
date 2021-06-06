@@ -4,7 +4,7 @@ import {message, Button, Form, Select, Input, PageHeader, Spin, TreeSelect} from
 import {swrHDFSList} from '../core/swr';
 import {fetchJobStart} from '../core/api';
 import {parsePaths} from '../components/files/utils';
-import {createBreadCrumb} from '../components/breadcrumb';
+import {createBreadCrumb} from '../components/common/breadcrumb';
 
 export default function JobsPage({history}) {
   const [HDFSFiles, isHDFSFilesLoading, isHDFSFilesErrored] = swrHDFSList('/');

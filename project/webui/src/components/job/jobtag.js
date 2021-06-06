@@ -1,7 +1,7 @@
 import {Badge, Tag} from 'antd';
 import {CheckCircleOutlined, SyncOutlined, CloseCircleOutlined, ClockCircleOutlined} from '@ant-design/icons';
 
-import {toCapitalCase} from '../core/utils';
+import {toCapitalCase} from '../../core/utils';
 
 export default function JobTag({job}) {
   const stateText = toCapitalCase(job.state);

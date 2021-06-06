@@ -5,7 +5,7 @@ import {message, Button, Modal, PageHeader, Spin, Tabs, Tree, TreeSelect} from '
 import {swrFSList} from '../../core/swr';
 import {fetchHDFSList, fetchHDFSCopy} from '../../core/api'; 
 import {parsePaths} from './utils';
-import {createBreadCrumb} from '../breadcrumb';
+import {createBreadCrumb} from '../common/breadcrumb';
 
 const {TabPane} = Tabs;
 const {DirectoryTree} = Tree;

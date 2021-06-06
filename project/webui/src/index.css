@@ -35,3 +35,10 @@ body {
 .no-tag-margin .ant-tag {
   margin-right: 0;
 }
+
+.full-height {
+  height: 100%;
+}
+.full-height .ant-page-header-content {
+  height: calc(100vh - 200px)
+}

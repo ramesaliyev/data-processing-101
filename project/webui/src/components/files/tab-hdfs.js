@@ -5,7 +5,7 @@ import {message, Button, Input, Modal, PageHeader, Popconfirm, Spin, Tabs, Tree}
 import {swrHDFSList} from '../../core/swr';
 import {fetchHDFSMkdir, fetchHDFSRemove} from '../../core/api'; 
 import {parsePaths} from './utils';
-import {createBreadCrumb} from '../breadcrumb';
+import {createBreadCrumb} from '../common/breadcrumb';
 import FileContentDrawer from './file-content-drawer';
 
 const {TabPane} = Tabs;

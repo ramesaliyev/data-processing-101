@@ -1,13 +1,14 @@
 import {useParams} from "react-router-dom";
 import {useState} from 'react';
-import {message, Button, Descriptions, Popconfirm, PageHeader, Spin} from 'antd';
+import {message, Button, Descriptions, Divider, Popconfirm, PageHeader, Spin} from 'antd';
 
 import {fetchJobStart, fetchJobRemove} from '../core/api';
 import {swrJobDetail} from '../core/swr';
 import {getJobCloneDetails} from '../core/utils';
-import {createBreadCrumb} from '../components/breadcrumb';
-import JobTag, {JobBadge} from '../components/jobtag'
+import {createBreadCrumb} from '../components/common/breadcrumb';
+import JobTag, {JobBadge} from '../components/job/jobtag'
 import FileContentDrawer from '../components/files/file-content-drawer';
+import JobResults from '../components/job/job-results';
 
 export default function JobDetailPage({history}) {
   const {uuid} = useParams();
@@ -52,6 +53,7 @@ export default function JobDetailPage({history}) {
 
   return (
     <PageHeader
+      className="full-height"
       title={jobDetail.name}
       subTitle={jobDetail.key}
       onBack={() => history.goBack()}
@@ -111,7 +113,6 @@ export default function JobDetailPage({history}) {
             :
             "-"
           }
-          
         </Descriptions.Item>
       </Descriptions>
       <FileContentDrawer
@@ -119,6 +120,8 @@ export default function JobDetailPage({history}) {
         onClose={onFileDrawerClose}
         isVisible={selectedFilePath}
       />
+      <Divider></Divider>
+      <JobResults jobDetails={jobDetail} />
     </PageHeader>
   );
 }

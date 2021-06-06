@@ -1,9 +1,9 @@
-import {Button, Empty, List, PageHeader, Spin, Space, Tag} from 'antd';
-import {PlusOutlined, CheckCircleOutlined} from '@ant-design/icons';
+import {Button, Empty, List, PageHeader, Spin, Space} from 'antd';
+import {PlusOutlined} from '@ant-design/icons';
 
 import {swrAllJobs} from '../core/swr';
-import {createBreadCrumb} from '../components/breadcrumb';
-import JobTag, {JobKeyTag} from '../components/jobtag'
+import {createBreadCrumb} from '../components/common/breadcrumb';
+import JobTag, {JobKeyTag} from '../components/job/jobtag'
 
 function JobsPageHeader({children}) {
   return (
