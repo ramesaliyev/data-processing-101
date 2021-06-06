@@ -18,6 +18,9 @@ const MainMenu = (
       <Menu.Item>
         <a target="_blank" href="http://localhost:8082">Resource Manager</a>
       </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" href="http://localhost:8083">History Server</a>
+      </Menu.Item>
     </SubMenu>
   </Menu>
 );

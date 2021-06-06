@@ -23,8 +23,9 @@ hdfs namenode -format
 Following Hadoop screens will be available; 
 - Namenode: http://localhost:8081
 - Resource Manager: http://localhost:8082
-- Node Manager 1: http://localhost:8083
-- Node Manager 2: http://localhost:8084
+- History Server: http://localhost:8083
+- Node Manager 1: http://localhost:8084
+- Node Manager 2: http://localhost:8085
 
 > For regular initializations just run `docker-compose up`.
 
@@ -70,6 +71,7 @@ See WebUI at http://localhost:3000
 # Troubleshooting
 
 - If MapReduce job keeps getting `KILLED` everytime, try to decrease node count, for example remove `nodemanager2` from `docker-compose.yml`, not sure why but it can be about memory.
+- This repo uses old version of https://github.com/big-data-europe/docker-hadoop, checking repo and its issues may help you.
 
 # Help
 

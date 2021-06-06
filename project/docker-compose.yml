@@ -38,6 +38,8 @@ services:
       - datanode2
     volumes:
       - hadoop_historyserver:/hadoop/yarn/timeline
+    ports:
+      - 8083:8188
     env_file:
       - ./hadoop.env
   
@@ -51,7 +53,7 @@ services:
       - datanode1
       - datanode2
     ports:
-        - 8083:8042
+        - 8091:8042
     env_file:
       - ./hadoop.env
     
@@ -65,7 +67,7 @@ services:
       - datanode1
       - datanode2
     ports:
-        - 8084:8042
+        - 8092:8042
     env_file:
       - ./hadoop.env
   
