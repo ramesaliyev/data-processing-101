@@ -1,5 +1,7 @@
 import {Breadcrumb, Divider, Row, Col, Dropdown, Menu} from 'antd';
 
+const {SubMenu} = Menu;
+
 const MainMenu = (
   <Menu>
     <Menu.Item key="jobs">
@@ -8,6 +10,15 @@ const MainMenu = (
     <Menu.Item key="files">
       <a href="/files">File Browser</a>
     </Menu.Item>
+    <Menu.Divider />
+    <SubMenu title="Hadoop">
+      <Menu.Item>
+        <a target="_blank" href="http://localhost:8081/">Name Node</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a target="_blank" href="http://localhost:8082">Resource Manager</a>
+      </Menu.Item>
+    </SubMenu>
   </Menu>
 );
 
