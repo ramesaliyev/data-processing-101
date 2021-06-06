@@ -72,27 +72,29 @@ function ResultRow({movie, rating, style}) {
 export default function JobResults({jobDetails}) {
   const [metaData, setMetaData] = useState({});
 
+  useEffect(async () => {
+    if (jobDetails.done) {
+      await prepareDB();
+      let output = await fetchHDFSRead(`${jobDetails.output}/part-r-00000`);
+      output = output.map(o => o.split(',').map(Number))
+        .filter(([,r]) => r==r)
+        .sort(([,a], [,b]) => b - a);
+
+      setMetaData({
+        ready: true,
+        output,
+        totalEntry: output.length,
+        maxValue: output[0][1],
+        minValue: output[output.length-1][1],
+      });
+    }
+  }, [jobDetails]);
+
   if (!jobDetails.done) {
     return (
       <div>Job result will be here when job completed.</div>
     );
   }
-
-  useEffect(async () => {
-    await prepareDB();
-    let output = await fetchHDFSRead(`${jobDetails.output}/part-r-00000`);
-    output = output.map(o => o.split(',').map(Number))
-      .filter(([,r]) => r==r)
-      .sort(([,a], [,b]) => b - a);
-
-    setMetaData({
-      ready: true,
-      output,
-      totalEntry: output.length,
-      maxValue: output[0][1],
-      minValue: output[output.length-1][1],
-    });
-  }, [jobDetails]);
 
   if (!metaData.ready) {
     return (
