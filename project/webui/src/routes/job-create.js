@@ -72,7 +72,7 @@ export default function JobsPage({history}) {
           <Form.Item name="input" label="Input File">
             <TreeSelect
               disabled={inProgress}
-              treeDefaultExpandedKeys={['/', '/movielens_test']}
+              treeDefaultExpandedKeys={['/', '/movielens']}
               style={{width: '100%'}}
               dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
               treeData={parsedFiles}
@@ -91,7 +91,7 @@ export default function JobsPage({history}) {
           </Form.Item>
           <Form.Item label="" colon={false}>
             <Button type="primary" htmlType="submit" loading={inProgress} style={{marginRight:'8px'}}>
-              Submit
+              Create and Run Job
             </Button>
             <Button htmlType="reset" onClick={onReset} disabled={inProgress}>
               Reset
