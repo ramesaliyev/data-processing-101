@@ -1,7 +1,7 @@
 # About
 
 ## Dataset
-MovieLens (9/2018) full dataset used https://grouplens.org/datasets/movielens/latest/. To run project you need to place `links.csv`, `movies.csv`, `tags.csv`, and `ratings.csv` directly under `volumes/data` folder. Then you can load them into HDFS from WebUI.
+MovieLens (9/2018) full dataset used https://grouplens.org/datasets/movielens/latest/. To run project you need to place `links.csv`, `movies.csv`, `tags.csv`, and `ratings.csv` files under `volumes/data` folder, or alternatively you can use test data files from `volumes/data/test`. After project setup you need to load them into HDFS path `/movielens` from WebUI. Even though MapReduce jobs takes input file as parameter and do not depend this, some WebUI functionalities will search files like `movies.csv` under `/movielens` folder like `/movielens/movies.csv`.
 
 ## First Hadoop Initialization
 

@@ -33,7 +33,7 @@ export default function JobsPage({history}) {
   };
 
   const initialValues = {
-    input: '/movielens_test/ratings.csv',
+    input: '/movielens/ratings.csv',
     output: '/movielens_results'
   }
 
