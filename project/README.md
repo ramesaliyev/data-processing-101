@@ -64,7 +64,7 @@ npm install -g serve
 serve -s build
 ```
 
-See WebUI at http://localhost:3000
+See WebUI at http://localhost:5000
 
 > To understand how whole application operates you can examine API calls or read code.
 
