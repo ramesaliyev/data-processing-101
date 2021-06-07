@@ -36,12 +36,6 @@ function JobsList({jobList, isJobListLoading, isJobListErrored}) {
     );
   }
 
-  if (!jobList || !jobList.length) {
-    <Space size="large">
-      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> : 
-    </Space>
-  }
-
   return (
     <List
       size="large"
